@@ -1,0 +1,35 @@
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode slowNode = head;
+        ListNode fastNode = head;
+
+        while (fastNode != null && fastNode.next != null) {
+            slowNode = slowNode.next;
+            fastNode = fastNode.next.next;
+        }
+
+        ListNode previousNode = null;
+        ListNode currentNode = slowNode;
+
+        while (currentNode != null) {
+            ListNode nextNode = currentNode.next;
+            currentNode.next = previousNode;
+            previousNode = currentNode;
+            currentNode = nextNode;
+        }
+
+        ListNode firstHalf = head;
+        ListNode secondHalf = previousNode;
+
+        while (secondHalf != null) {
+            if (firstHalf.val != secondHalf.val) {
+                return false;
+            }
+
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+
+        return true;
+    }
+}
